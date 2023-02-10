@@ -26,16 +26,16 @@ In the first part you will write a small user-land program that has a parent pro
 
 //We want Child 1 to execute first, then Child 2, and finally Parent.
 int main() {
-  int pid = fork(); //fork the first child
-  if(pid < 0) {
+  int ret = fork(); //fork the first child
+  if(ret < 0) {
     printf(1, "Error forking first child.\n");
-  } else if (pid == 0) {
+  } else if (ret == 0) {
     printf(1, "Child 1 Executing\n");
   } else {
-    pid = fork(); //fork the second child
-    if(pid < 0) {
+    ret = fork(); //fork the second child
+    if(ret < 0) {
       printf(1, "Error forking second child.\n");
-    } else if(pid == 0) {
+    } else if(ret == 0) {
       printf(1, "Child 2 Executing\n");
     } else {
       printf(1, "Parent Waiting\n"); 
@@ -243,20 +243,20 @@ include "condvar.h"
 int main() {
   init_lock();
   init_cv();
-  int pid = fork(); //fork the first child
-  if(pid < 0) {
+  int ret = fork(); //fork the first child
+  if(ret < 0) {
     printf(1, "Error forking first child.\n");
-  } else if (pid == 0) { 
+  } else if (ret == 0) { 
     sleep(5);
     lock();
     printf(1, "Child 1 Executing\n");
     cv_broadcast();	
     unlock();	
   } else {
-    pid = fork(); //fork the second
-    if(pid < 0) {
+    ret = fork(); //fork the second
+    if(ret < 0) {
       printf(1, "Error forking second child.\n");
-    } else if(pid == 0) {
+    } else if(ret == 0) {
       lock();
       cv_wait();
       printf(1, "Child 2 Executing\n");
@@ -334,10 +334,10 @@ int main() {
   init_lock();
   init_cv();
   int fd = open("flag", O_RDWR | O_CREATE); 
-  int pid = fork(); //fork the first child
-  if(pid < 0) {
+  int ret = fork(); //fork the first child
+  if(ret < 0) {
     printf(1, "Error forking first child.\n");
-  } else if (pid == 0) { 
+  } else if (ret == 0) { 
     sleep(5);
     lock();
     printf(1, "Child 1 Executing\n"); 
@@ -345,10 +345,10 @@ int main() {
     cv_broadcast(); 
     unlock();
   } else {
-    pid = fork(); //fork the second
-    if(pid < 0) {
+    ret = fork(); //fork the second
+    if(ret < 0) {
       printf(1, "Error forking second child.\n");
-     } else if(pid == 0) { 
+     } else if(ret == 0) { 
       lock(); 
       struct stat stats; 
       fstat(fd, &stats);
